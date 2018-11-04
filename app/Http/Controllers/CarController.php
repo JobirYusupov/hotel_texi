@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Car;
+use App\Carimage;
 use Illuminate\Http\Request;
 
 class CarController extends Controller
@@ -49,8 +50,16 @@ class CarController extends Controller
         ]);
 
 
-        Car::create($request->all());
+        $car = Car::create($request->all());
 
+        foreach ($request->images as $image) {
+            $imagename = time().$image->getClientOriginalName();
+            $image->storeAs('images/car_images', $imagename);
+            Carimage::create([
+                'car_id' => $car->id,
+                'image' => 'images/car_images/'.$imagename,
+            ]);
+        }
 
         return redirect()->route('car.index')
             ->with('success',"Mashina muvaffaqiyatli qo'shildi");

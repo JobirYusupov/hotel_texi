@@ -32,6 +32,8 @@ Route::group(['middleware' => [ \Illuminate\Auth\Middleware\Authenticate::class,
     Route::put('/profile/{profile}', 'ProfileController@update')->name('profile.update');
 
     Route::resource('/car', 'CarController');
+
+    Route::resource('/carimage', 'CarimageController');
 });
 
 //Route::get('a', function (){

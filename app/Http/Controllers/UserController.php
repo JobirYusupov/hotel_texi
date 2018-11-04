@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
@@ -130,6 +131,7 @@ class UserController extends Controller
         $user = User::find($id);
         $full_name = $user->name." ".$user->last_name;
 
+        Storage::delete($user->profile->image);
         $user->profile()->delete();
         $user->delete();
         return redirect()->back()->with(['success'=>$full_name." muvaffaqiyatli o'chirildi"]);

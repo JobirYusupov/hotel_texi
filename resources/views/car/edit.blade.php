@@ -1,8 +1,53 @@
 @extends('layouts.app')
+@section('css')
+    <!-- Owl Stylesheets -->
+    <link rel="stylesheet" href="{{ asset('css/carousel/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/carousel/owl.theme.default.min.css') }}">
+    <style>
+        .bottom-left {
+            position: absolute;
+            bottom: 8px;
+            left: 16px;
+        }
+    </style>
+@endsection
 @section('content')
+    {{--carusel--}}
+    <section id="demos" style="overflow: hidden">
+        <div class="row">
+            <div class="large-12 columns" >
+                <div class="owl-carousel owl-theme">
+                    @foreach($car->images as $image)
+                        <div class="item">
+                            <img src="{{ asset('/storage/'.$image->image) }}" alt="rasm" class="img img-fluid"   style="height: 200px;">
+                            <div class="bottom-left">
+                                <form action="{{ route('carimage.destroy', ['id'=>$image->id]) }}" method="POST">
+                                    @csrf
+                                    @method('delete')
+                                    <button class="btn btn-outline-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </section>
+    {{--end carusel--}}
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8 nocanvas">
+                <form class="my-3" action="{{ route('carimage.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="row">
+                        <div class="col">
+                            <input type="hidden" value="{{ $car->id }}" name="car_id">
+                            <input type="file" multiple name="images[]" required>
+                            <button class="btn btn-primary"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+
+                </form>
                 <div class="card">
                     <div class="card-header">{{ __("Mashina ma'lumotlarini o'zgartirish") }}</div>
 
@@ -137,4 +182,39 @@
             </div>
         </div>
     </div>
+@endsection
+@section('script')
+    <script src="{{ asset('js/carousel/owl.carousel.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            var owl = $('.owl-carousel');
+            owl.owlCarousel({
+                margin: 10,
+                nav: true,
+                loop: true,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    600: {
+                        items: 3
+                    },
+                    1000: {
+                        items: 5
+                    }
+                }
+            })
+        })
+    </script>
+    {{--<script>--}}
+        {{--$(document).ready(function() {--}}
+            {{--$('.owl-carousel').owlCarousel({--}}
+                {{--margin: 10,--}}
+                {{--loop: true,--}}
+                {{--autoWidth: false,--}}
+                {{--items: 4--}}
+            {{--})--}}
+        {{--})--}}
+    {{--</script>--}}
+
 @endsection
