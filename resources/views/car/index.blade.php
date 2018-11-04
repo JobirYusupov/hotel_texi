@@ -1,0 +1,59 @@
+@extends('layouts.app')
+@section('content')
+    <div class="container-fluid">
+        @if(Session::get('success'))
+            <div class="alert alert-primary container" role="alert">
+                <strong>{{ Session::get('success') }}</strong>
+            </div>
+        @endif
+        @if(Session::get('error'))
+            <div class="alert alert-danger container" role="alert">
+                <strong>{{ Session::get('error') }}</strong>
+            </div>
+        @endif
+        <a class="btn btn-warning float-right m-2" href="{{ route('car.create') }}">Yangi yaratish</a>
+        <div class="table-responsive-md">
+            <table class="table table-hover">
+                <thead class="table-dark">
+                <tr>
+                    <th>TR</th>
+                    <th>Brend</th>
+                    <th>Model</th>
+                    <th>Chiqarilgan payt</th>
+                    <th>Rangi</th>
+                    <th>Davlat raqami</th>
+                    <th>Xizmat turi</th>
+                    <th>Sug'urta kompaniyasi nomi</th>
+                    <th>Sug'urta muddati</th>
+                    <th>Haydovchisi</th>
+                    <th>Boshqarish</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($cars as $car)
+                    <tr>
+                        <td>{{ $n-- }}</td>
+                        <td>{{ $car->brand }}</td>
+                        <td>{{ $car->model }}</td>
+                        <td>{{ $car->release_date }}</td>
+                        <td>{{ $car->color }}</td>
+                        <td>{{ $car->car_number }}</td>
+                        <td>{{ $car->order_type }}</td>
+                        <td>{{ $car->insurance_company_name }}</td>
+                        <td>{{ $car->insurance_expiration_date }}</td>
+                        <td>{{ ($car->profile != NULL) ? $car->profile->user->name.' '.$car->profile->user->last_name : "" }}</td>
+                        <td>
+                            <a href="{{ route('car.edit', ['id'=>$car->id]) }}" class="btn btn-primary btn-sm">O'zgartirish</a>
+                            <form class="d-inline" method="post" action="{{ route('car.destroy', ['id'=>$car->id]) }}">
+                                @csrf
+                                @method('delete')
+                                <button class="btn btn-danger btn-sm">O'chirish</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+@endsection

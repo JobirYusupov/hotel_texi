@@ -1,0 +1,77 @@
+haydovchi{
+rasm
+ismi
+familiya
+bank malumotnomasi_id
+raqami tel
+haydovchilik guvohnomasi_id
+litsenziya_id
+inn
+sugurta_id
+mashina haqida_id
+texnik_id
+tibbiy_id
+
+}
+bank malumoti{
+bank ismi
+plastik karta nomeri
+plastik karta muddati
+bank hisob raqami
+}
+haydovchilik guvohnomasi{
+seria nomer
+berilgan vaqti 
+tugash vaqti
+}
+litsenziya{
+litsenziya egalik malumotlari
+amal qilish muddati
+}
+	sugurta{
+	sugurta kampaniyasi nomi
+	amal qilish muddati
+	}
+	mashina haqida{
+	marka 
+	model
+	chiqarilgan payt
+	rangi
+	davlat raqami
+	qabul qilish mumkin bolgan buyurtma turi
+	}
+tibbiy {
+korikdan otgan payti
+umumiy holati
+harorati
+qon bosimi
+pulsi
+ichganlik darajasi
+doctor_id
+}
+doctor{
+ismi
+familiyasi
+password
+}
+texnik korik{
+texnik ko'rikdan otgan payti
+gildiraklarning bosimi va umumiy holati
+yoritish qurulmalari holati
+kuzov holati
+salon tozaligi
+haydovchilik guvohnomasi
+tex pasport
+favqulotda vaziyat jihozlari borligi(aptechka kiyim)
+11:57 PM 9/27/2018
+texasmotr_id
+}
+texasmotr{
+name
+familiya
+password
+}
+
+
+
+
