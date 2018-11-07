@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Car;
+use App\Carimage;
 use App\Http\Middleware\admin;
 use App\Http\Middleware\Authenticate;
 use App\Profile;
@@ -92,6 +93,15 @@ class RegisterController extends Controller
                     'car_number' => $data['car_number'],
                     'order_type' => $data['order_type'],
                 ]);
+
+                foreach ($data['images'] as $image) {
+                    $imagename = time().$image->getClientOriginalName();
+                    $image->storeAs('images/car_images', $imagename);
+                    Carimage::create([
+                        'car_id' => $car->id,
+                        'image' => 'images/car_images/'.$imagename,
+                    ]);
+                }
 
                 $car_id = $car->id;
             } else{

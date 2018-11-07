@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Car;
+use App\Carimage;
 use App\Profile;
 use App\User;
 use Illuminate\Http\Request;
@@ -44,7 +46,39 @@ class ProfileController extends Controller
 
         request()->image->storeAs('images', $imageName);
 
-        $profile = Profile::create($request->all());
+        if ($request->car_id == "yangi")
+        {
+            request()->validate([
+                'insurance_company_name' => 'required',
+                'insurance_expiration_date' => 'required',
+                'brand' => 'required',
+                'model' => 'required',
+                'release_date' => 'required',
+                'color' => 'required',
+                'car_number' => 'required',
+                'order_type' => 'required',
+            ]);
+
+
+            $car = Car::create($request->all());
+
+            foreach ($request->images as $image) {
+                $imagename = time().$image->getClientOriginalName();
+                $image->storeAs('images/car_images', $imagename);
+                Carimage::create([
+                    'car_id' => $car->id,
+                    'image' => 'images/car_images/'.$imagename,
+                ]);
+            }
+
+            $requestData = $request->all();
+            $requestData['car_id'] = $car->id;
+
+        }else{
+            $requestData = $request->all();
+        }
+
+        $profile = Profile::create($requestData);
         $profile->update(['image'=>'images/'.$imageName]);
 
         $profile_id = User::find($request->user_id)->role->id;
@@ -85,6 +119,38 @@ class ProfileController extends Controller
      */
     public function update(Request $request, Profile $profile)
     {
+        if ($request->car_id == "yangi")
+        {
+            request()->validate([
+                'insurance_company_name' => 'required',
+                'insurance_expiration_date' => 'required',
+                'brand' => 'required',
+                'model' => 'required',
+                'release_date' => 'required',
+                'color' => 'required',
+                'car_number' => 'required',
+                'order_type' => 'required',
+            ]);
+
+
+            $car = Car::create($request->all());
+
+            foreach ($request->images as $image) {
+                $imagename = time().$image->getClientOriginalName();
+                $image->storeAs('images/car_images', $imagename);
+                Carimage::create([
+                    'car_id' => $car->id,
+                    'image' => 'images/car_images/'.$imagename,
+                ]);
+            }
+
+            $requestData = $request->all();
+            $requestData['car_id'] = $car->id;
+
+        } else{
+            $requestData = $request->all();
+        }
+
         if ($request->image != NULL)
         {
             request()->validate([
@@ -95,13 +161,13 @@ class ProfileController extends Controller
 
             request()->image->storeAs('images', $imageName);
 
-            $profile->update($request->all());
+            $profile->update($requestData);
             $profile->update(['image'=>'images/'.$imageName]);
 
             return redirect()->route('role.show', ['id'=>1]);
         } else{
             $imageName = $profile->image;
-            $profile->update($request->all());
+            $profile->update($requestData);
             $profile->update(['image' => $imageName]);
 
             return redirect()->route('role.show', ['id'=>1]);

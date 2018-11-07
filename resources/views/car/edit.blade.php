@@ -48,6 +48,9 @@
                     </div>
 
                 </form>
+                @if($car->profile)
+                    Haydovchisi: <a href="{{ route('profile.edit', ['id'=>$car->profile->id]) }}">{{ $car->profile->user->name }}</a>
+                @endif
                 <div class="card">
                     <div class="card-header">{{ __("Mashina ma'lumotlarini o'zgartirish") }}</div>
 

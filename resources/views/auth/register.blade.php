@@ -311,6 +311,19 @@
                             {{--mashinani formasi--}}
                             <div id="mashina">
                                 <div class="form-group row">
+                                    <label for="images" class="col-sm-4 col-form-label text-md-right">{{ __('images') }}</label>
+
+                                    <div class="col-md-6">
+                                        <input id="images" multiple type="file" class="form-control{{ $errors->has('images') ? ' is-invalid' : '' }}" name="images[]" value="{{ old('images') }}" required>
+
+                                        {{--@if ($errors->has('images'))--}}
+                                            {{--<span class="invalid-feedback" role="alert">--}}
+                                                                {{--<strong>{{ $errors->first('images') }}</strong>--}}
+                                                            {{--</span>--}}
+                                        {{--@endif--}}
+                                    </div>
+                                </div>
+                                <div class="form-group row">
                                     <label for="brand" class="col-sm-4 col-form-label text-md-right">{{ __('brand') }}</label>
 
                                     <div class="col-md-6">

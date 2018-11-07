@@ -24,6 +24,9 @@ Route::group(['middleware' => [ \Illuminate\Auth\Middleware\Authenticate::class,
     Route::put('/user/{user}', 'UserController@update')->name('user.update');
     Route::delete('/user/{user}', 'UserController@destroy')->name('user.delete');
 
+    Route::get('/user/{user}/texinfos', 'UserController@texinfos')->name('user.texinfos');
+    Route::get('/user/{user}/medicalinfos', 'UserController@medicalinfos')->name('user.medicalinfos');
+
     Route::get('/role/{role}', 'RoleController@show')->name('role.show');
 
     Route::get('/profile/create/{user}', 'ProfileController@create')->name('profile.create');

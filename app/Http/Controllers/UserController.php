@@ -131,9 +131,33 @@ class UserController extends Controller
         $user = User::find($id);
         $full_name = $user->name." ".$user->last_name;
 
-        Storage::delete($user->profile->image);
-        $user->profile()->delete();
+        if (isset($user->profile)){
+            Storage::delete($user->profile->image);
+            $user->profile()->delete();
+        }
+        if (count($user->texinfo)){
+            foreach ($user->texinfos as $item){
+                $item->delete();
+            }
+        }
+        if (count($user->medicalinfo)){
+            foreach ($user->medicalinfos as $item){
+                $item->delete();
+            }
+        }
         $user->delete();
         return redirect()->back()->with(['success'=>$full_name." muvaffaqiyatli o'chirildi"]);
+    }
+
+    public function texinfos(User $user)
+    {
+        $texinfos = $user->texinfo()->latest()->get();
+        return view('infos.texinfos', ['texinfos'=>$texinfos]);
+    }
+
+    public function medicalinfos(User $user)
+    {
+        $medicalinfos = $user->texinfo()->latest()->get();
+        return view('infos.medicalinfos', ['medicalinfos'=>$medicalinfos]);
     }
 }
