@@ -151,13 +151,15 @@ class UserController extends Controller
 
     public function texinfos(User $user)
     {
-        $texinfos = $user->texinfo()->latest()->get();
-        return view('infos.texinfos', ['texinfos'=>$texinfos]);
+        $n = count($user->texinfo);
+        $texinfos = $user->texinfo()->latest()->paginate(7);
+        return view('infos.texinfos', ['texinfos'=>$texinfos, 'n'=>$n, 'user'=>$user]);
     }
 
     public function medicalinfos(User $user)
     {
-        $medicalinfos = $user->texinfo()->latest()->get();
-        return view('infos.medicalinfos', ['medicalinfos'=>$medicalinfos]);
+        $n = count($user->medicalinfo);
+        $medicalinfos = $user->medicalinfo()->latest()->paginate(7);
+        return view('infos.medicalinfos', ['medicalinfos'=>$medicalinfos, 'n'=>$n, 'user'=>$user]);
     }
 }
