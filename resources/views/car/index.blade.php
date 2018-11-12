@@ -11,7 +11,24 @@
                 <strong>{{ Session::get('error') }}</strong>
             </div>
         @endif
-        <a class="btn btn-warning float-right m-2" href="{{ route('car.create') }}">Yangi yaratish</a>
+            <div class="row">
+                <div class="col-sm">
+                    <div class="form-inline">
+                        <div class="form-group mx-sm-2">
+                            <input type="text" class="form-control" id="number" placeholder="davlat raqami ...">
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="searchbutton"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="form-inline float-right">
+                        <div class="form-group mx-sm-2">
+                            <a class="btn btn-warning float-right m-2" href="{{ route('car.create') }}">Yangi yaratish</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         <div class="table-responsive-md">
             <table class="table table-hover">
                 <thead class="table-dark">
@@ -31,7 +48,7 @@
                 </thead>
                 <tbody>
                 @foreach($cars as $car)
-                    <tr>
+                    <tr class="all" title="{{ $car->car_number }}">
                         <td>{{ $n-- }}</td>
                         <td>{{ $car->brand }}</td>
                         <td>{{ $car->model }}</td>
@@ -56,4 +73,19 @@
             </table>
         </div>
     </div>
+@endsection
+@section('script')
+    <script>
+        $(document).ready(function () {
+            $("#searchbutton").click(function () {
+                $('.all').hide();
+
+                $('tbody > tr').each(function(  ) {
+                    if (this['title'].indexOf($('#number').val()) != -1){
+                        $(this).show();
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

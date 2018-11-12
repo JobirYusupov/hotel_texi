@@ -20,6 +20,29 @@
                <strong>{{ Session::get('success') }}</strong>
            </div>
        @endif
+       @if($role->id == 1)
+       <div class="row">
+           <div class="col-sm">
+               <div class="form-group">
+                   <select name="tur" id="tur" class="form-control">
+                       <option value="1">Hammasi</option>
+                       <option value="2">O'tganlar</option>
+                       <option value="3">O'tmaganlar</option>
+                       <option value="4">Shifokordan o'tmaganlar</option>
+                       <option value="5">Texnikdan o'tmaganlar</option>
+                   </select>
+               </div>
+           </div>
+           <div class="col-sm">
+               <div class="form-inline float-right">
+                   <div class="form-group mx-sm-2 mb-2">
+                       <input type="text" class="form-control" id="username" placeholder="qidiring...">
+                   </div>
+                   <button type="submit" class="btn btn-primary mb-2" id="searchbutton"><i class="fas fa-search"></i></button>
+               </div>
+           </div>
+       </div>
+       @endif
        <div class="table-responsive-md">
            <table class="table">
                <thead class="table-dark">
@@ -39,13 +62,19 @@
                </thead>
                <tbody>
                 @foreach($role->users()->Latest()->get() as $user)
-               <tr class="
+               <tr class="all
                @if ($role->id == 1 and count($user->medicalinfo) and count($user->texinfo) and $user->medicalinfo->last()->result == '1' and $user->texinfo->last()->result == '1')
-                       bg-table-success
+                       bg-table-success not-error
                @elseif($role->id == 1 and count($user->medicalinfo) and count($user->texinfo) and !($user->medicalinfo->last()->result == '1' and $user->texinfo->last()->result == '1'))
                         bg-table-danger
                @endif
-                       ">
+               @if($role->id == 1 and count($user->medicalinfo) and $user->medicalinfo->last()->result == '0')
+                    med-error
+               @endif
+               @if($role->id == 1 and count($user->texinfo) and $user->texinfo->last()->result == '0')
+                       tex-error
+               @endif
+                       " title="{{ $user->name.' '.$user->last_name.' '.$user->patronymic}}">
                    <td>{{ $n-- }}</td>
                    <td>{{ $user->name }}</td>
                    <td>{{ $user->last_name }}</td>
@@ -89,4 +118,43 @@
            </table>
        </div>
    </div>
+@endsection
+@section('script')
+    <script>
+        $(document).ready(function () {
+            $("#tur").change(function () {
+                if ($("#tur").val() == "1"){
+                    $('.all').show();
+                }
+                if ($("#tur").val() == "2"){
+                    $('.all').hide();
+                    $('.not-error').show();
+                }
+                if ($("#tur").val() == "3"){
+                    $('.all').hide();
+                    $('.med-error').show();
+                    $('.tex-error').show();
+                }
+                if ($("#tur").val() == "4"){
+                    $('.all').hide();
+                    $('.med-error').show();
+                }
+                if ($("#tur").val() == "5"){
+                    $('.all').hide();
+                    $('.tex-error').show();
+                }
+            });
+            $("#searchbutton").click(function () {
+                $('.all').hide();
+                var username = $("#username").val();
+
+                $('tbody > tr').each(function(  ) {
+                    //alert(this['title']);
+                   if (this['title'].indexOf($('#username').val()) != -1){
+                       $(this).show();
+                   }
+                });
+            });
+        });
+    </script>
 @endsection

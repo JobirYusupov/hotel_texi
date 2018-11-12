@@ -40,6 +40,19 @@ class UserController extends BaseController
     {
         $user = User::find($id);
         $user->profile = $user->profile;
+
+        $requester = Auth::user();
+        if ($requester->role_id == 2)
+        {
+            $user->medicalinfos = $user->medicalinfo()->orderBy('created_at', 'desc')->take(7)->get();
+        }
+        if ($requester->role_id == 3)
+        {
+            $car = $user->profile->car;
+            $car_images = $user->profile->car->images;
+            $user->texinfos = $user->texinfo()->orderBy('created_at', 'desc')->take(7)->get();
+        }
+
         $success['user'] = $user;
         return $this->sendResponse($success, "Haydovchi ma'lumotlari yuborildi");
     }
