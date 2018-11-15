@@ -16,11 +16,15 @@ class Users extends JsonResource
      */
     public function toArray($request)
     {
-        $medinfo = $this->medicalinfo->last();
-        $medinfo->doctor_name = User::find($this->medicalinfo->last()->doctor_id)->name;
+        if (isset($this->medicalinfo->id)){
+            $medinfo = $this->medicalinfo->last();
+            $medinfo->doctor_name = User::find($this->medicalinfo->last()->doctor_id)->name;
+        }
 
-        $texinfo = $this->texinfo->last();
-        $texinfo->technician_name = User::find($this->texinfo->last()->technician_id)->name;
+        if (isset($this->texinfo->id)){
+            $texinfo = $this->texinfo->last();
+            $texinfo->technician_name = User::find($this->texinfo->last()->technician_id)->name;
+        }
 
         return [
             'id' => $this->id,
