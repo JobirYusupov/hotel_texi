@@ -136,12 +136,12 @@ class UserController extends Controller
             $user->profile()->delete();
         }
         if (count($user->texinfo)){
-            foreach ($user->texinfos as $item){
+            foreach ($user->texinfo as $item){
                 $item->delete();
             }
         }
         if (count($user->medicalinfo)){
-            foreach ($user->medicalinfos as $item){
+            foreach ($user->medicalinfo as $item){
                 $item->delete();
             }
         }

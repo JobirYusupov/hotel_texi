@@ -76,7 +76,7 @@ class UserController extends BaseController
         $users = User::all()->where('role_id', 1);
         foreach ($users as $key => $user)
         {
-            $success[$key] = new Users($user);
+            $success[] = new Users($user);
         }
 
         return $this->sendResponse($success, "Haydovchilarning ma'lumotlari yuborildi");
