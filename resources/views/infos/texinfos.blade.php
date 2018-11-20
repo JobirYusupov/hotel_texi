@@ -11,8 +11,8 @@
                <th scope="col">yoritish</th>
                <th scope="col">kuzov</th>
                <th scope="col">tozalik</th>
-               <th scope="col">driver_license</th>
-               <th scope="col">technical_coupon</th>
+               <th scope="col">Jilet</th>
+               <th scope="col">belgi</th>
                <th scope="col">emergency_equipment</th>
                <th scope="col">braking_path</th>
                <th scope="col">result</th>

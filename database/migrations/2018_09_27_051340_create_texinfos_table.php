@@ -21,8 +21,8 @@ class CreateTexinfosTable extends Migration
             $table->text('lighting_and_limensions'); //yoritish va o'lchamlar
             $table->text('car_body_condition'); //kuzov holati
             $table->text('cleanliness_of_salon'); //salom tozaligi
-            $table->text('driver_license'); //Наличия водительских прав и
-            $table->text('technical_coupon'); // технического талона
+            $table->text('driver_license'); //Наличия водительских прав и //pidjak
+            $table->text('technical_coupon'); // технического талона// belgi
             $table->text('emergency_equipment'); //favqulodda xafvsizlik johozlari borligi
             $table->string('braking_path'); //tormoz yo'li
             $table->timestamps();
